@@ -1,0 +1,294 @@
+// ==========================================================================
+// Mixin
+// ==========================================================================
+
+@mixin grid-class($cols) {
+
+    $i: 1;
+    
+    $i-m: 1;
+    $cols-m: $cols / 2;
+    $col-m-width: 100% / $cols-m;
+    $original-col-m-width: 100% / $cols-m;
+    
+    $i-l: 1;
+    $cols-l: $cols;
+    $col-l-width: 100% / $cols-l;
+    $original-col-l-width: 100% / $cols-l;
+
+    @while $i < $cols + 1 {
+        &#{$i} {
+            float: left;
+            width: 100%;
+            $i: $i +1;
+        }
+    }
+
+    @media screen and (min-width: $bp-narrow) { /* narrow */
+        $skip: false;
+        @while $i-m < $cols + 1 {  // <=16
+            @if $skip == false {
+                @if $i-m == 1 {
+                    &#{$i-m} {
+                        width: $col-m-width / 2 + $original-col-l-width;
+                    }
+                    $skip: true;
+                    $i-m: $i-m + 1;
+                }
+                @if $skip == false {
+                    @if $i-m > 1 {
+                        &#{$i-m} {
+                            width: $col-m-width / 2 + $original-col-m-width;
+                        }
+                        $skip: true;
+                        $i-m: $i-m + 1;
+                    }
+                }
+            }
+            @if $skip == true {
+                $col-m-width: $original-col-m-width * $i-m;
+                &#{$i-m} {
+                    width: $col-m-width / 2;
+                }
+                $skip: false;
+                $i-m: $i-m + 1;
+            }
+        }
+    }
+    @media screen and (min-width: $bp-wide) { /* wide */
+        @while $i-l < $cols-l + 1 {
+            &#{$i-l} {
+                width: $col-l-width;
+            }
+            $i-l: $i-l + 1;
+            $col-l-width: $original-col-l-width * $i-l;
+            // $col-l-width: $col-l-width: * $i;
+        }
+    }
+}
+
+// Margin left
+@mixin grid-push($cols) {
+    
+    $i-m: 1;
+    $cols-m: $cols / 2;
+    $col-m-width: 100% / $cols-m;
+    $original-col-m-width: 100% / $cols-m;
+    
+    $i-l: 1;
+    $cols-l: $cols;
+    $col-l-width: 100% / $cols-l;
+    $original-col-l-width: 100% / $cols-l;
+
+    @media screen and (min-width: $bp-narrow) { /* narrow */
+        $skip: false;
+        @while $i-m < $cols + 1 {  // <=16
+            @if $skip == false {
+                @if $i-m == 1 {
+                    &#{$i-m} {
+                        margin-left: 0; /* 0 */
+                    }
+                    $skip: true;
+                    $i-m: $i-m + 1;
+                }
+                @if $skip == false {
+                    @if $i-m > 1 {
+                        &#{$i-m} {
+                            margin-left: $col-m-width / 2 + $original-col-l-width; /* 1 */
+                        }
+                        $skip: true;
+                        $i-m: $i-m + 1;
+                    }
+                }
+            }
+            @if $skip == true {
+                $col-m-width: $original-col-m-width * $i-m;
+                &#{$i-m} {
+                    margin-left: $col-m-width / 2; /* 2 */
+                }
+                $skip: false;
+                $i-m: $i-m + 1;
+            }
+        }
+    }
+    @media screen and (min-width: $bp-wide) { /* wide */
+        @while $i-l < $cols-l + 1 {
+            &#{$i-l} {
+                margin-left: $col-l-width;
+            }
+            $i-l: $i-l + 1;
+            $col-l-width: $original-col-l-width * $i-l;
+            // $col-l-width: $col-l-width: * $i;
+        }
+    }
+}
+
+// Negative margin left
+@mixin grid-pull($cols) {
+    
+    $i-m: 1;
+    $cols-m: $cols / 2;
+    $col-m-width: 100% / $cols-m;
+    $original-col-m-width: 100% / $cols-m;
+    
+    $i-l: 1;
+    $cols-l: $cols;
+    $col-l-width: 100% / $cols-l;
+    $original-col-l-width: 100% / $cols-l;
+
+    @media screen and (min-width: $bp-narrow) { /* narrow */
+        $skip: false;
+        @while $i-m < $cols + 1 {  // <=16
+            @if $skip == false {
+                @if $i-m == 1 {
+                    &#{$i-m} {
+                        margin-left: -($col-m-width / 2 + $original-col-l-width);
+                    }
+                    $skip: true;
+                    $i-m: $i-m + 1;
+                }
+                @if $skip == false {
+                    @if $i-m > 1 {
+                        &#{$i-m} {
+                            margin-left: -($col-m-width / 2 + $original-col-m-width);
+                        }
+                        $skip: true;
+                        $i-m: $i-m + 1;
+                    }
+                }
+            }
+            @if $skip == true {
+                $col-m-width: $original-col-m-width * $i-m;
+                &#{$i-m} {
+                    margin-left: -($col-m-width / 2);
+                }
+                $skip: false;
+                $i-m: $i-m + 1;
+            }
+        }
+    }
+    @media screen and (min-width: $bp-wide) { /* wide */
+        @while $i-l < $cols-l + 1 {
+            &#{$i-l} {
+                margin-left: -($col-l-width);
+            }
+            $i-l: $i-l + 1;
+            $col-l-width: $original-col-l-width * $i-l;
+            // $col-l-width: $col-l-width: * $i;
+        }
+    }
+}
+
+
+// Margin right
+@mixin grid-post($cols) {
+    
+    $i-m: 1;
+    $cols-m: $cols / 2;
+    $col-m-width: 100% / $cols-m;
+    $original-col-m-width: 100% / $cols-m;
+    
+    $i-l: 1;
+    $cols-l: $cols;
+    $col-l-width: 100% / $cols-l;
+    $original-col-l-width: 100% / $cols-l;
+
+    @media screen and (min-width: $bp-narrow) { /* narrow */
+        $skip: false;
+        @while $i-m < $cols + 1 {  // <=16
+            @if $skip == false {
+                @if $i-m == 1 {
+                    &#{$i-m} {
+                        margin-right: $col-m-width / 2 + $original-col-l-width;
+                    }
+                    $skip: true;
+                    $i-m: $i-m + 1;
+                }
+                @if $skip == false {
+                    @if $i-m > 1 {
+                        &#{$i-m} {
+                            margin-right: $col-m-width / 2 + $original-col-m-width;
+                        }
+                        $skip: true;
+                        $i-m: $i-m + 1;
+                    }
+                }
+            }
+            @if $skip == true {
+                $col-m-width: $original-col-m-width * $i-m;
+                &#{$i-m} {
+                    margin-right: $col-m-width / 2;
+                }
+                $skip: false;
+                $i-m: $i-m + 1;
+            }
+        }
+    }
+    @media screen and (min-width: $bp-wide) { /* wide */
+        @while $i-l < $cols-l + 1 {
+            &#{$i-l} {
+                margin-right: $col-l-width;
+            }
+            $i-l: $i-l + 1;
+            $col-l-width: $original-col-l-width * $i-l;
+            // $col-l-width: $col-l-width: * $i;
+        }
+    }
+}
+
+
+// Negative margin right
+@mixin grid-post-pull($cols) {
+    
+    $i-m: 1;
+    $cols-m: $cols / 2;
+    $col-m-width: 100% / $cols-m;
+    $original-col-m-width: 100% / $cols-m;
+    
+    $i-l: 1;
+    $cols-l: $cols;
+    $col-l-width: 100% / $cols-l;
+    $original-col-l-width: 100% / $cols-l;
+
+    @media screen and (min-width: $bp-narrow) { /* narrow */
+        $skip: false;
+        @while $i-m < $cols + 1 {  // <=16
+            @if $skip == false {
+                @if $i-m == 1 {
+                    &#{$i-m} {
+                        margin-right: -($col-m-width / 2 + $original-col-l-width);
+                    }
+                    $skip: true;
+                    $i-m: $i-m + 1;
+                }
+                @if $skip == false {
+                    @if $i-m > 1 {
+                        &#{$i-m} {
+                            margin-right: -($col-m-width / 2 + $original-col-m-width);
+                        }
+                        $skip: true;
+                        $i-m: $i-m + 1;
+                    }
+                }
+            }
+            @if $skip == true {
+                $col-m-width: $original-col-m-width * $i-m;
+                &#{$i-m} {
+                    margin-right: -($col-m-width / 2);
+                }
+                $skip: false;
+                $i-m: $i-m + 1;
+            }
+        }
+    }
+    @media screen and (min-width: $bp-wide) { /* wide */
+        @while $i-l < $cols-l + 1 {
+            &#{$i-l} {
+                margin-right: -($col-l-width);
+            }
+            $i-l: $i-l + 1;
+            $col-l-width: $original-col-l-width * $i-l;
+            // $col-l-width: $col-l-width: * $i;
+        }
+    }
+}

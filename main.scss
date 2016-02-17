@@ -1,0 +1,23 @@
+@import 'variables';
+@import 'mixin';
+
+// ==========================================================================
+// Magic
+// ==========================================================================
+
+// Define the grid
+.span-{ // Define the width of an element
+    @include grid-class($columns); // The number of columns in your grid
+}
+.push-{ // Add a left margin to an element
+    @include grid-push($columns); // The number of columns in your grid
+}
+.pull-{ // Add a negative left margin to an element
+    @include grid-pull($columns); // The number of columns in your grid
+}
+.post-{ // Add a right margin to an element
+    @include grid-post($columns); // The number of columns in your grid
+}
+.post-pull-{ // Add a negative right margin to an element
+    @include grid-post-pull($columns); // The number of columns in your grid
+}
